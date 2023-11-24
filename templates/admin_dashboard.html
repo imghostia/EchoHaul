@@ -1,0 +1,22 @@
+<!-- templates/admin_dashboard.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+</head>
+<body>
+
+    <h2>Welcome, Admin!</h2>
+
+    <div>
+
+        <a href="{{ url_for('add_records') }}"><button>Add Records</button></a>
+        <a href="{{ url_for('view_complaints') }}"><button>View Complaints</button></a>
+        <a href="{{ url_for('manage_employees') }}"><button>Manage Employees</button></a>
+    </div>
+
+</body>
+</html>
