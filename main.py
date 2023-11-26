@@ -21,7 +21,7 @@ db = db_connection()
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
-    return render_template('home.html') # simple home page
+    return render_template('home.html')
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
