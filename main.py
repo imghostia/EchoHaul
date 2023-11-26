@@ -36,6 +36,33 @@ class User(db.Model):
 @app.route('/', methods=['GET', 'POST'])
 def home():
     return render_template('home.html')
+<<<<<<< HEAD
+=======
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        conn, cursor = db_connection()
+        
+        fn = request.form.get('firstName')
+        ln = request.form.get('lastName')
+        eml = request.form.get('emailOrPhone')
+        psw = request.form.get('password')
+        id = request.form.get('driversLicense')
+        add = request.form.get('address')
+                  
+        query = "INSERT INTO UserRegistrations(first_name, last_name, email_or_phone, password, drivers_license, address) VALUES (?, ?, ?, ?, ?, ?)"
+        cursor.execute(query, (fn, ln, eml, psw, id, add))
+
+        conn.commit()
+        cursor.close()
+        conn.close()
+        return redirect(url_for('login'))
+
+    return render_template('register.html')
+
+
+>>>>>>> 5917d564c2a307e692842891e839604b8b1bb44b
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
