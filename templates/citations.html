@@ -39,22 +39,39 @@
 
         <section>
             <div class="container">
-                <!--<h4> THE BOOKWORMS EDITOR'S</h4>
-                <h1>Featured books of the </h1>
-                <h1><b>November</b></h1>
-                <a href="#" class="see-more-button">See More</a>
-            </div> -->
+              <main>
+                {% extends "base.html" %}
+                {% block content %}
+                <table id="data" class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th>Complaint ID</th>
+                      <th>Complaint Description</th>
+                      <th>Complaint Date</th>
+                      <th>Map ID</th>
+                      <th>Complaint Addres</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for user in users_citations %}
+                    <tr>
+                      <td>{{ user.Co_id }}</td>
+                      <td>{{ user.Co_desc }}</td>
+                      <td>{{ user.Co_date }}</td>
+                      <td>{{ user.M_id }}</td>
+                      <td>{{ user.Co_address }}</td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+                {% endblock %}
+              </main>
+              </div>   
         </section>
 
-        <main>
-            {% block content %}
-        
-            {% endblock %}
-        </main>
-
-        <footer>
-            <p>© 2023 EcoHaul</p>
-        </footer>
+    <footer>
+      <p>© 2023 EcoHaul</p>
+    </footer>
     </body>
 </html>
 

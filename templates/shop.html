@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>EcoHaul</title>
+        <link rel="stylesheet" href="static/user.css">
+        <style>
+              
+        </style>
+    </head>
+
+    <body>
+        <header>
+            <h1>EcoHaul</h1>
+            <div class="logout">
+                <a href="{{ url_for('logout') }}">logout</a>
+                <!--<a href="liked">Liked</a>
+                <a href="profile">Profile</a>
+                <a href="cart">Cart</a>
+            </div> -->
+        </header>
+
+        <form action="{{ url_for('shop') }}" method="post"></form>
+        <div class="nav">
+            <!--<div class="menu-button">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div> -->
+            <a href="{{ url_for('my_citations') }}">My Citation</a>
+            <a href="{{ url_for('my_notice') }}">My Notice</a>
+            <a href="#">Track Ativity</a>
+            <a href="{{ url_for('shop') }}">Shop</a>
+            <a href="#">Services</a>
+            <a href="#">Notifications</a>
+            <a href="#">Contact</a>
+            <!--<div class="search-container">
+                <input type="text" class="search-input" placeholder="Search...">
+                <button class="search-button">Search</button>
+            </div> -->
+        </div>
+
+        <section>
+            <div class="container">
+                <div class="shop-container">
+                    <!-- Product 1 -->
+                    <div class="product-card">
+                        <div class="product-image">
+                          <!-- Add your image here -->
+                          <img src="bag.jpg" alt="Product Image" />
+                        </div>
+                        <div class="product-details">
+                          <h2 class="product-title">Awesome</h2>
+                          <h4 class="product-price">$10</h4>
+                          <button class="add-to-cart-btn">Add to Cart</button>
+                          <button class="view-btn">View</button>
+                        </div>
+                      </div>
+                    </div>
+                </br>
+                
+                    <!-- Product 2 -->
+                <div class="shop-container">
+                    <div class="product-card">
+                        <div class="product-image">
+                          <!-- Add your image here -->
+                          <img src="bag.jpg" alt="Product Image" />
+                        </div>
+                        <div class="product-details">
+                          <h2 class="product-title">Awesome</h2>
+                          <h4 class="product-price">$10</h4>
+                          <button class="add-to-cart-btn">Add to Cart</button>
+                          <button class="view-btn">View</button>
+                        </div>
+                      </div>
+                    </div>
+                </br>                    
+
+                    <!-- Product 3 -->
+                        <div class="product-card">
+                            <div class="product-image">
+                              <!-- Add your image here -->
+                              <img src="bag.jpg" alt="Product Image" />
+                            </div>
+                            <div class="product-details">
+                              <h2 class="product-title">Awesome</h2>
+                              <h4 class="product-price">$10</h4>
+                              <button class="add-to-cart-btn">Add to Cart</button>
+                              <button class="view-btn">View</button>
+                            </div>
+                          </div>
+                        </div>
+
+                    <!-- Product 4 -->
+                    <div class="product">
+                        <img src="product2.jpg" alt="Product 2">
+                        <div class="product-title">Product 2</div>
+                        <div class="product-price">$29.99</div>
+                        <button>Add to Cart</button>
+                    </div>
+                
+                    <!-- Repeat similar blocks for Products 3 to 6 -->
+                </div>
+            </div>
+        </section>
+        
+        <footer>
+            <p>© 2023 EcoHaul</p>
+        </footer>
+    </body>
+</html>
+
+
+

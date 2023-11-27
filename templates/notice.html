@@ -30,7 +30,6 @@
             <a href="#">Services</a>
             <a href="#">Notifications</a>
             <a href="#">Contact</a>
-    
             <!--<div class="search-container">
                 <input type="text" class="search-input" placeholder="Search...">
                 <button class="search-button">Search</button>
@@ -39,23 +38,39 @@
 
         <section>
             <div class="container">
-                <!--<h4> THE BOOKWORMS EDITOR'S</h4>
-                <h1>Featured books of the </h1>
-                <h1><b>November</b></h1>
-                <a href="#" class="see-more-button">See More</a>
-            </div> -->
+              <main>
+                {% extends "base.html" %}
+                {% block content %}
+                <table id="data" class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th>Complaint ID</th>
+                      <th>Category</th>
+                      <th>Description</th>
+                      <th>Addres</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for user in users_notice %}
+                    <tr>
+                      <td>{{ user.C_id }}</td>
+                      <td>{{ user.C_category }}</td>
+                      <td>{{ user.C_desc }}</td>
+                      <td>{{ user.C_date }}</td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+                {% endblock %}
+            </main>
+            </div>
         </section>
-
-        <main>
-            {% block content %}
         
-            {% endblock %}
-        </main>
-
         <footer>
             <p>© 2023 EcoHaul</p>
         </footer>
     </body>
 </html>
+
 
 
