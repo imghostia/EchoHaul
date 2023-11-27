@@ -26,12 +26,15 @@ class User(db.Model):
     drivers_license = db.Column(db.String(100), unique=True, nullable=False)
     address = db.Column(db.String(200), nullable=False)
 
-    def set_password(self, password):
-        self.password = generate_password_hash(password)
-
-    def check_password(self, password):
-        return check_password_hash(self.password, password)
-
+   
+    
+class User2(db.Model):
+    _tablename_ = 'CivilianComplaintReport'
+    Co_id = db.Column(db.Integer, primary_key=True)
+    Co_desc = db.Column(db.String(100), nullable=False)
+    Co_date = db.Column(db.DateTime, nullable=False)
+    m_id = db.Column(db.Integer, nullable=False)
+    Co_address = db.Column(db.String(200), nullable=False)
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
@@ -43,8 +46,6 @@ def login():
         username = request.form['emailOrPhone']
         password = request.form['password']
         
-        query = "SELECT * FROM UserRegistrations WHERE email_or_phone=? AND password=?"
-
         user = User.query.filter_by(email_or_phone=username).first()
         if user and user.password == password:
             session['loggedin'] = True
@@ -63,13 +64,11 @@ def register():
         password = request.form['password']
         firstname = request.form.get('firstName')
         lastname = request.form.get('lastName')
-        email = request.form.get('emailOrPhone')
         password = request.form.get('password')
         id = request.form.get('driversLicense')
         address = request.form.get('address')
 
-        query = "INSERT INTO UserRegistrations(first_name, last_name, email_or_phone, password, drivers_license, address) VALUES (?, ?, ?, ?, ?, ?)"
-        user = User(first_name=firstname, last_name=lastname, email_or_phone=email, password=password, drivers_license=id, address=address)
+        user = User(first_name=firstname, last_name=lastname, email_or_phone=username, password=password, drivers_license=id, address=address)
         db.session.add(user)
         db.session.commit()
 
@@ -85,6 +84,32 @@ def user():
     else:
         return redirect(url_for('login'))
 
+@app.route('/my_citations', methods=['GET', 'POST'])
+def my_citations():
+    Co_id = []
+    Co_desc = []
+    Co_date = []
+    M_id = []
+    Co_address = []
+    
+    if 'loggedin' in session:
+        if request.method == 'POST':
+            results = User2.query.all()
+            
+            for i in results:
+                Co_id.append(i.Co_id)
+                Co_desc.append(i.Co_desc)
+                Co_date.append(i.Co_date)
+                M_id.append(i.M_id)
+                Co_address.append(i.Co_address) 
+            return redirect(url_for('my_citations'))
+
+    return render_template('my_citations.html', count=len(Co_id), Co_id=Co_id, Co_desc=Co_desc, Co_date=Co_date, M_id=M_id, Co_address=Co_address)    
+
 if __name__ == '__main__':
     app.run(debug=True)
+
+    
+
+
     

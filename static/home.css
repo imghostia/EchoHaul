@@ -1,0 +1,63 @@
+body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        #login-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+
+        #login-container h1 {
+            color: #333;
+        }
+
+        #login-container p {
+            margin-top: 10px;
+            color: #777;
+        }
+
+        #login-container a {
+            display: block;
+            margin-top: 20px;
+            text-decoration: none;
+            padding: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        #facebook-btn {
+            color: #fff;
+            background-color: #3b5998;
+        }
+
+        #google-btn {
+            color: #fff;
+            background-color: #dd4b39;
+        }
+
+        #email-btn {
+            color: #fff;
+            background-color: #3498db;
+        }
+
+        #phone-btn {
+            color: #fff;
+            background-color: #27ae60;
+        }
+
+        #register-link {
+            margin-top: 10px;
+            color: #000;
+            text-decoration: none;
+        }

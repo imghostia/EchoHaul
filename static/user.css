@@ -1,0 +1,25 @@
+body {
+    background-color: white;
+    color: green;
+}
+header, footer {
+    background-color: green;
+    color: white;
+    text-align: center;
+    padding: 10px;
+}
+nav {
+    margin: 10px 0;
+    text-align: center;
+}
+nav a {
+    margin: 0 15px;
+    color: green;
+}
+main {
+    text-align: center;
+    margin: 20px;
+}
+.section {
+    display: none;
+}
