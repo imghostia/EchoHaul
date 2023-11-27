@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Complaints</title>
-    <style></style>
+    <link rel="stylesheet" href="static/my_citations.css">
     
 
     <script>
@@ -27,27 +27,32 @@
         <a href="#" onclick="toggleSection('contactArea')">Contact</a>
     </nav>
     <main>
-        {% block content %}
-        <h2>Complaints</h2>
-        <table>
-            <tr>
-                <th>Complaint ID</th>
-                <th>Complaint Description</th>
-                <th>Complaint Date</th>
-                <th>Map ID</th>
-                <th>Complaint Address</th>
-            </tr>
-            {% for i in range(count) %}
-            <tr>
-                <td>{{ Co_id[i] }}</td>
-                <td>{{ Co_desc[i] }}</td>
-                <td>{{ Co_datee[i] }}</td>
-                <td>{{ M_id[i] }}</td>
-                <td>{{ Co_address[i] }}</td>
-            </tr>
-            {% endfor %}
-        </table>
-        {% endblock %}
+        {% extends "base.html" %}
+
+{% block content %}
+  <table id="data" class="table table-striped">
+    <thead>
+      <tr>
+        <th>Complaint ID</th>
+        <th>Complaint Description</th>
+        <th>Complaint Date</th>
+        <th>Map ID</th>
+        <th>Complaint Addres</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for user in users %}
+        <tr>
+          <td>{{ user.Co_id }}</td>
+          <td>{{ user.Co_desc }}</td>
+          <td>{{ user.Co_date }}</td>
+          <td>{{ user.M_id }}</td>
+          <td>{{ user.Co_address }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
     </main>
     <footer>
         <p>© 2023 EcoHaul</p>

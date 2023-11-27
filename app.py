@@ -2,8 +2,6 @@ from flask import Flask, render_template, request, redirect, url_for, flash, ses
 from flask_sqlalchemy import SQLAlchemy
 import pyodbc
 from sqlalchemy import create_engine
-from werkzeug.security import check_password_hash, generate_password_hash
-
 
 
 app = Flask(__name__)
@@ -29,11 +27,11 @@ class User(db.Model):
    
     
 class User2(db.Model):
-    _tablename_ = 'CivilianComplaintReport'
+    __tablename__ = 'CivilianComplaintReport'
     Co_id = db.Column(db.Integer, primary_key=True)
     Co_desc = db.Column(db.String(100), nullable=False)
     Co_date = db.Column(db.DateTime, nullable=False)
-    m_id = db.Column(db.Integer, nullable=False)
+    M_id = db.Column(db.Integer, nullable=False)
     Co_address = db.Column(db.String(200), nullable=False)
 
 @app.route('/', methods=['GET', 'POST'])
@@ -86,25 +84,12 @@ def user():
 
 @app.route('/my_citations', methods=['GET', 'POST'])
 def my_citations():
-    Co_id = []
-    Co_desc = []
-    Co_date = []
-    M_id = []
-    Co_address = []
-    
+       
     if 'loggedin' in session:
-        if request.method == 'POST':
-            results = User2.query.all()
-            
-            for i in results:
-                Co_id.append(i.Co_id)
-                Co_desc.append(i.Co_desc)
-                Co_date.append(i.Co_date)
-                M_id.append(i.M_id)
-                Co_address.append(i.Co_address) 
-            return redirect(url_for('my_citations'))
+        users = User2.query
+    
+    return render_template('my_citations.html', title='Citations', users=users)
 
-    return render_template('my_citations.html', count=len(Co_id), Co_id=Co_id, Co_desc=Co_desc, Co_date=Co_date, M_id=M_id, Co_address=Co_address)    
 
 if __name__ == '__main__':
     app.run(debug=True)
