@@ -2,7 +2,10 @@ from flask import Flask, render_template, request, redirect, url_for, flash, ses
 from flask_sqlalchemy import SQLAlchemy
 import pyodbc
 from sqlalchemy import create_engine
+<<<<<<< HEAD
 import os
+=======
+>>>>>>> 987b687e7c7981645ace5aa69c7e55c0b148c489
 
 
 app = Flask(__name__)
@@ -100,6 +103,7 @@ def user():
 def my_citations():
        
     if 'loggedin' in session:
+<<<<<<< HEAD
         users_citations = User2.query
     
     return render_template('citations.html', title='My Citations', users_citations=users_citations)
@@ -115,6 +119,12 @@ def my_notice():
 @app.route('/shop', methods=['GET', 'POST'])
 def shop():
     return render_template('shop.html')
+=======
+        users = User2.query
+    
+    return render_template('my_citations.html', title='Citations', users=users)
+
+>>>>>>> 987b687e7c7981645ace5aa69c7e55c0b148c489
 
 if __name__ == '__main__':
     app.run(debug=True)
