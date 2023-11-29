@@ -256,6 +256,7 @@ footer {
     transition: all 0.25s ease;
 }
 
+
 .add-to-cart-btn:hover,
 .view-btn:hover { 
     opacity: 0.8;

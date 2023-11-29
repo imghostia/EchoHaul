@@ -3,6 +3,9 @@
     <head>
         <title>EcoHaul</title>
         <link rel="stylesheet" href="static/user.css">
+        <style>
+              
+        </style>
     </head>
 
     <body>
@@ -15,8 +18,7 @@
                 <a href="cart">Cart</a>
             </div> -->
         </header>
-
-        <form action="{{ url_for('user') }}" method="post"></form>
+        <form action="{{ url_for('my_cart') }}" method="post"></form>
         <div class="nav">
             <!--<div class="menu-button">
                 <span></span>
@@ -30,32 +32,45 @@
             <a href="#">Services</a>
             <a href="#">Notifications</a>
             <a href="{{ url_for('contact') }}">Contact</a>
-    
+
+            <a href="{{ url_for('my_cart') }}" class="cart-icon">
+                <img src="static/cart.png" alt="Cart">
+                <span class="cart-count">0</span> <!-- This span can be used to display the number of items in the cart -->
+            </a>
             <!--<div class="search-container">
                 <input type="text" class="search-input" placeholder="Search...">
                 <button class="search-button">Search</button>
             </div> -->
-        </div>
+        </div>    
 
         <section>
             <div class="container">
-                <!--<h4> THE BOOKWORMS EDITOR'S</h4>
-                <h1>Featured books of the </h1>
-                <h1><b>November</b></h1>
-                <a href="#" class="see-more-button">See More</a>
-            </div> -->
+                {% for p in products %}
+                    <div class="shop-container">
+                        <!-- Product 1 -->
+                        <div class="product-card">
+                            <div class="product-image">
+                                <a><img src="static/bag.jpg" alt="Product Image" /></a>
+                            </div>
+                            <div class="product-details">
+                                <th class="product-title" >{{p.Name}}</th>
+                                <h4 class="product-price">{{p.price}}</h4>
+                                <button href="{{ url_for('add_cart') }}" class="add-to-cart-btn">Remove Item</button>
+                                <button class="view-btn">Buy</button>
+                            </div>
+                        </div>
+                    </div>
+                </br>
+                <!-- Repeat similar blocks for Products 3 to 6 -->
+                </div>
+            </div>
         </section>
-
-        <main>
-            {% block content %}
         
-            {% endblock %}
-        </main>
-
         <footer>
             <p>© 2023 EcoHaul</p>
         </footer>
     </body>
 </html>
+
 
 
