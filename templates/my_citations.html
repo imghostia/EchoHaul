@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Complaints</title>
+    <link rel="stylesheet" href="static/my_citations.css">
+    
+
+    <script>
+        function toggleSection(id) {
+            var section = document.getElementById(id);
+            section.style.display = section.style.display === 'none' ? 'block' : 'none';
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <h1>EcoHaul</h1>
+        <form action="{{ url_for('user') }}" method="post"></form>
+    </header>
+    <nav>
+        <a href="{{ url_for('my_citations') }}">My Citation</a>
+        <a href="#" onclick="toggleSection('noticeArea')">My Notice</a>
+        <a href="#" onclick="toggleSection('activityArea')">Track Activity</a>
+        <a href="#" onclick="toggleSection('shopArea')">Shop</a>
+        <a href="#" onclick="toggleSection('servicesArea')">Services</a>
+        <a href="#" onclick="toggleSection('notificationsArea')">Notifications</a>
+        <a href="#" onclick="toggleSection('contactArea')">Contact</a>
+    </nav>
+    <main>
+        {% extends "base.html" %}
+
+{% block content %}
+  <table id="data" class="table table-striped">
+    <thead>
+      <tr>
+        <th>Complaint ID</th>
+        <th>Complaint Description</th>
+        <th>Complaint Date</th>
+        <th>Map ID</th>
+        <th>Complaint Addres</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for user in users %}
+        <tr>
+          <td>{{ user.Co_id }}</td>
+          <td>{{ user.Co_desc }}</td>
+          <td>{{ user.Co_date }}</td>
+          <td>{{ user.M_id }}</td>
+          <td>{{ user.Co_address }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
+    </main>
+    <footer>
+        <p>© 2023 EcoHaul</p>
+    </footer>
+</body>
+</html>
