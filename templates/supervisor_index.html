@@ -1,0 +1,48 @@
+{% extends 'admin_base.html' %}
+{% block content %}
+
+        <!-- partial -->
+
+          <div class="content-wrapper">
+            <div class="row">
+
+              <div class="col-md-4 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Assign a map </h4>
+                    <p class="card-description">Assign a map to the driver </p>
+                    <div class="template-demo">
+                      <a href="{{ url_for('supervisor_assign_map') }}"><button type="button" class="btn btn-outline-secondary btn-lg btn-block">Add</button></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+                <div class="col-md-4 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">View Drivers </h4>
+                    <p class="card-description">View the details of driver </p>
+                    <div class="template-demo">
+                      <a href="{{ url_for('report_customer') }}"><button type="button" class="btn btn-outline-secondary btn-lg btn-block">Add</button></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+                <div class="col-md-4 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">View Loaders </h4>
+                    <p class="card-description">View the details of driver </p>
+                    <div class="template-demo">
+                      <a href="{{ url_for('report_customer') }}"><button type="button" class="btn btn-outline-secondary btn-lg btn-block">Add</button></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+          <!-- content-wrapper ends -->
+          <!-- partial:partials/_footer.html -->
+
+          {% endblock %}
