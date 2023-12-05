@@ -599,7 +599,14 @@ def display_maps():
     maps = cursor.fetchall()
     return render_template('sample_drop.html', maps=maps)
 
+@app.route('/view_complaints', methods=['GET'])
+def view_complaints():
+    with conn.cursor() as cursor:
+        select_query = "SELECT c_desc FROM complaints"
+        cursor.execute(select_query)
+        complaints = cursor.fetchall()
 
+    return render_template('view_complaints.html', complaints=complaints)
 
 if __name__ == '__main__':
     app.run(debug=True)
