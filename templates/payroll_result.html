@@ -4,8 +4,12 @@
 
 
 <body>
-    <h1>Payroll Result</h1>
-    <p>Total Salary: ${{ total_salary }}</p>
+  <h1>Payroll Result</h1>
+    <p><strong>Employee Role:</strong> {{ employee_role }}</p>
+    <p><strong>Hours Worked:</strong> {{ hours_worked }}</p>
+    <p><strong>Tax Deducted:</strong> ${{ tax_deducted }}</p>
+    <p><strong>Gross Total Salary:</strong> ${{ gross_total_salary }}</p>
+
 </body>
 
 {% endblock %}

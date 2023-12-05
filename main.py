@@ -641,21 +641,22 @@ employee_data = {
 @app.route('/payroll_calculator', methods=['GET', 'POST'])
 def payroll_calculator():
     if request.method == 'POST':
-        # Get data from the form
         hours_worked = float(request.form['hours_worked'])
         user_role = request.form['user_role']
 
-        # Get employee data based on user role
         employee_info = employee_data.get(user_role, {})
         hourly_rate = employee_info.get('hourly_rate', 0)
 
-        # Calculate total salary
-        total_salary = hours_worked * hourly_rate
+        tax_deducted = 0.13 * (hours_worked * hourly_rate)  # Assuming 13% tax
+        gross_total_salary = hours_worked * hourly_rate - tax_deducted
 
-        return render_template('payroll_result.html', total_salary=total_salary)
+        return render_template('payroll_result.html',
+                           employee_role=user_role,
+                           hours_worked=hours_worked,
+                           tax_deducted=tax_deducted,
+                           gross_total_salary=gross_total_salary)
 
     return render_template('payroll_calculator.html')
-
 
 if __name__ == '__main__':
     app.run(debug=True)
