@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leave Requests</title>
+</head>
+<body>
+    <h1>Leave Requests</h1>
+
+    <form method="POST" action="{{ url_for('leave_requests') }}">
+        <label for="employee_name">Employee Name:</label>
+        <input type="text" id="employee_name" name="employee_name" required><br>
+
+        <label for="start_date">Start Date:</label>
+        <input type="date" id="start_date" name="start_date" required><br>
+
+        <label for="end_date">End Date:</label>
+        <input type="date" id="end_date" name="end_date" required><br>
+
+         <label for="user_type">User Type:</label>
+        <select id="user_type" name="user_type" required>
+            <option value="supervisor">Supervisor</option>
+            <option value="driver">Driver</option>
+           <option value="loader">Loader</option>
+        </select><br>
+
+        <button type="submit">Submit Leave Request</button>
+    </form>
+
+    <ul>
+        {% for leave_request in leave_requests %}
+            <li>
+                <strong>{{ leave_request.employee_name }}</strong>
+                <span>{{ leave_request.start_date }} to {{ leave_request.end_date }}</span>
+                <form method="POST" action="{{ url_for('approve_leave', request_id=leave_request.id) }}">
+                    <button type="submit">Approve</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

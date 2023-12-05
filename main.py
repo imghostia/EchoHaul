@@ -637,7 +637,6 @@ employee_data = {
     'loader': {'hourly_rate': 16.65}
 }
 
-
 @app.route('/payroll_calculator', methods=['GET', 'POST'])
 def payroll_calculator():
     if request.method == 'POST':
@@ -657,6 +656,51 @@ def payroll_calculator():
                            gross_total_salary=gross_total_salary)
 
     return render_template('payroll_calculator.html')
+
+
+@app.route('/leave_requests', methods=['GET', 'POST'])
+def leave_requests():
+    if request.method == 'POST':
+        # Code to handle form submission and add leave request to the database
+        employee_name = request.form.get('employee_name')
+        start_date = request.form.get('start_date')
+        end_date = request.form.get('end_date')
+        user_type = request.form.get('user_type')
+        status = 'Pending'
+
+        insert_leave_request(employee_name, start_date, end_date, status)
+
+        return redirect(url_for('leave_requests'))
+    else:
+        # Code to fetch leave requests from the database
+        leave_requests_data = fetch_leave_requests_from_database()
+        return render_template('leave_requests.html', leave_requests=leave_requests_data)
+
+def insert_leave_request(employee_name, start_date, end_date,user_type):
+    status = 'Pending'
+    cursor.execute('''
+        INSERT INTO leave_requests (employee_name, start_date, end_date,user_type, status)
+        VALUES (?, ?, ?,?, ?)
+    ''', (employee_name, start_date, end_date,user_type, status))
+    conn.commit()
+
+def fetch_leave_requests_from_database():
+    # Code to fetch leave requests from the database
+    cursor.execute('SELECT * FROM leave_requests WHERE status != \'Approved\'')
+    leave_requests_data = [ {'id': row[0], 'employee_name': row[1], 'start_date': row[2], 'end_date': row[3], 'status': row[4]} for row in  cursor.fetchall()]
+    return leave_requests_data
+
+@app.route('/approve_leave/<int:request_id>', methods=['GET', 'POST'])
+def approve_leave(request_id):
+    # Code to update the status of the leave request in the database
+    # Assuming you have a function to handle the approval in the database
+    update_leave_request_status(request_id, 'Approved')
+
+    # return jsonify({"success": True, "message": "Leave request approved successfully"})
+    return render_template('approve_leave.html')
+def update_leave_request_status(request_id, new_status):
+    cursor.execute('UPDATE leave_requests SET status = ? WHERE id = ?', (new_status, request_id))
+    conn.commit()
 
 if __name__ == '__main__':
     app.run(debug=True)
