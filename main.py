@@ -608,5 +608,28 @@ def view_complaints():
 
     return render_template('view_complaints.html', complaints=complaints)
 
+@app.route('/customer_feedback', methods=['GET'])
+def view_feedback():
+    return render_template('customer_feedback.html')
+
+@app.route('/customer_feedback', methods=['POST'])
+def customer_feedback():
+    customer_name = request.form['customerName']
+    email = request.form['email']
+    phone = request.form['phone']
+    feedback_type = request.form['feedbackType']
+    feedback_text = request.form['feedback']
+
+    # Here, you can process the feedback data, store it in a database, send emails, etc.
+    # For simplicity, let's just print the information to the console.
+    print(f"Customer Name: {customer_name}")
+    print(f"Email: {email}")
+    print(f"Phone: {phone}")
+    print(f"Feedback Type: {feedback_type}")
+    print(f"Feedback: {feedback_text}")
+
+    success_message = "Feedback submitted successfully!"
+    return render_template('admin_dashboard.html', message=success_message)
+
 if __name__ == '__main__':
     app.run(debug=True)
