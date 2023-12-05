@@ -1,13 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Leave Request Approved</title>
-</head>
+{% extends 'admin_base.html' %}
+{% block content %}
+
 <body>
     <h1>Leave Request Approved</h1>
     <p>{{ message }}</p>
     <a href="{{ url_for('leave_requests') }}">Go back to Leave Requests</a>
-</body>
-</html>
+
+
+ {% endblock %}
