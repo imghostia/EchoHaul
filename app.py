@@ -68,16 +68,18 @@ class User3(db.Model):
 
 class User4(db.Model):
     __tablename__ = 'ProductDetails'
-    item = db.Column(db.String(100), primary_key=True)
-    price = db.Column(db.Integer, nullable=False)
-    Name = db.Column(db.String(100), nullable=False)
+    PD_id = db.Column(db.Integer, primary_key=True)
+    PD_price = db.Column(db.Integer, nullable=False)
+    PD_desc = db.Column(db.String(100), nullable=False)
 
 
 class User5(db.Model):
     __tablename__ = 'CartItems'
-    item = db.Column(db.String(100), primary_key=True)
-    price = db.Column(db.Integer, nullable=False)
-    Name = db.Column(db.String(100), nullable=False)
+    CP_id = db.Column(db.String(100), primary_key=True)
+    CP_desc = db.Column(db.Integer, nullable=False)
+    CP_pirce = db.Column(db.String(100), nullable=False)
+    product_id = db.Column(db.Integer, db.ForeignKey('products.PD_id'),)
+
 
 
 
@@ -177,14 +179,25 @@ def my_cart():
     return render_template('cart.html')
 
 
+
+#shop
+@app.route('/shop', methods=['GET', 'POST'])
+def shop():
+    if 'loggedin' in session:
+        products = User4.query.all()
+        return render_template('shop.html', products=products)
+
+
+
+#add to cart
 #add to cart
 @app.route('/add_to_cart', methods=['GET','POST'])
 def add_to_cart():
     if 'loggedin' in session and request.method == 'POST':
-        pname = request.form.get('productname')
-        pprice = request.form.get('productprice')
-        pitem = request.form.get('numberofitem')
-
+        pname = request.form.get('product_name')
+        pprice = request.form.get('product_price')
+        pitem = request.form.get('product_item')
+    
         if pname and pprice and pitem:
             user = User5(item=pitem,price=pprice,Name=pname)
             db.session.add(user)
@@ -215,14 +228,7 @@ def remove_cart():
 
     return render_template('cart.html')
 
-#shop
-@app.route('/shop', methods=['GET', 'POST'])
-def shop():
-    if 'loggedin' in session:
-        products = User4.query.all()
-        return render_template('shop.html', products=products)
-    
-    return render_template('shop.html')
+
 
 
 #contact

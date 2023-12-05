@@ -54,28 +54,28 @@
                           <a><img src="static/bin.jpg" alt="Product Image" /></a>
                         </div>
                         <div class="product-details">
-                          <h2 class="product-title">{{p.Name}}</h2>
-                          <h4 class="product-price">${{p.price}}</h4>
-                          <h4 class="product-price">{{p.item}}</h4>
+                          <h2 class="product-title">{{p.PD_desc}}</h2>
+                          <h4 class="product-price">${{p.PD_price}}</h4>
+                          <h4 class="product-iteam">Product ID:{{p.PD_id}}</h4>
                           
-                          <div class="add-to-cart-btn">
-                            <form action="{{ url_for('add_to_cart') }}" method="post">
-                                <input type="hidden" productname="product_name" value="{{p.name}}">
-                                <input type="hidden" productprice="product_price" value="{{p.price}}">
-                                <input type="hidden" numberofitem="product_item" value="{{p.item}}">
+                          
+                          <form action="{{ url_for('add_to_cart') }}" method="post"></form>
+                          <div class="add-to-cart-btn">                            
+                                <input type="hidden" name="product_name" value="{{p.Name}}">
+                                <input type="hidden" name="product_price" value="{{p.price}}">
+                                <input type="hidden" name="product_item" value="{{p.item}}">
+                                
                                 <button type="submit" class="add-to-cart-btn">Add to Cart</button>
                             </form>
-                          </div>
+                            </div>
                         </div>
-                      </div>
                     </div>
                 </br>
                 <!-- Repeat similar blocks for Products 3 to 6 -->
                 </div>
                 {% endfor %}
             </div>
-        </section>
-        
+        </section>        
         <footer>
             <p>© 2023 EcoHaul</p>
         </footer>
