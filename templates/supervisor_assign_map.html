@@ -34,7 +34,7 @@
                                     <select class="form-control" name="d_assign_to_driver">
                                         <option value="">Select Driver</option>
                                         {% for driver in drivers %}
-                                            <option value="{{ driver.d_id }}">{{ driver.d_first_name }} {{ driver.d_last_name }}</option>
+                                            <option value="{{ driver.driver_id }}">{{ driver.d_first_name }} {{ driver.d_last_name }}</option>
                                         {% endfor %}
                                     </select>
                                 </div>
@@ -50,7 +50,7 @@
                                     <select class="form-control" name="d_assign_to_loader">
                                         <option value="">Select Loader</option>
                                         {% for loader in loaders %}
-                                            <option value="{{ loader.l_id }}">{{ loader.l_first_name }} {{ loader.l_last_name }}</option>
+                                            <option value="{{ loader.loader_id }}">{{ loader.l_first_name }} {{ loader.l_last_name }}</option>
                                         {% endfor %}
                                     </select>
                                 </div>
@@ -69,7 +69,7 @@
                     </div>
                     <button type="submit" class="btn btn-primary mr-2">Submit</button>
                     <button class="btn btn-dark btn-primary">Cancel</button>
-                    &nbsp  <a href="{{ url_for('admin_index') }}"><button type="button" class="btn btn-info btn-primary mr-2">Go Back</button></a>
+                    &nbsp  <a href="{{ url_for('admin_dashboard') }}"><button type="button" class="btn btn-info btn-primary mr-2">Go Back</button></a>
                 </form>
             </div>
         </div>

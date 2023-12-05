@@ -9,8 +9,8 @@ app = Flask(__name__)
 
 # Database Connection Configuration
 connection_string = 'DRIVER={SQL Server};SERVER=LAPTOP-9VI64K50\SQLEXPRESS;DATABASE=ecohaul;Trusted_Connection=yes;'
-conn = pyodbc.connect(connection_string)
-cursor = conn.cursor()
+# conn = pyodbc.connect(connection_string)
+# cursor = conn.cursor()
 
 UPLOAD_FOLDER = 'uploads'
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
@@ -18,12 +18,16 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # Limit file size to 16 MB
 
 
+
 def create_connection():
     return pyodbc.connect(connection_string)
 
+conn = create_connection()
+cursor = conn.cursor()
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
 
 
 @app.route('/')
@@ -33,6 +37,8 @@ def index():
 
 @app.route('/api/login', methods=['POST'])
 def login():
+    conn = create_connection()
+    cursor = conn.cursor()
     try:
         data = request.get_json()
         username = data.get('username')
@@ -61,6 +67,8 @@ def admin_dashboard():
 
 @app.route("/admin_supervisor_reg", methods=['GET', 'POST'])
 def admin_supervisor_reg():
+    conn = create_connection()
+    cursor = conn.cursor()
     if request.method == 'POST':
         # Extract form data
         first_name = request.form['s_first_name']
@@ -110,13 +118,13 @@ def display_supervisors():
 def delete_supervisor(id):
     if request.method == 'POST':
         # Assuming you have a supervisors table in your database
-        cursor.execute("DELETE FROM supervisors WHERE s_id = ?", (id,))
+        cursor.execute("DELETE FROM supervisors WHERE supervisor_id = ?", (id,))
         conn.commit()
 
         return redirect(url_for('display_supervisors'))
     else:
         # Fetch supervisor details for confirmation message
-        cursor.execute("SELECT * FROM supervisors WHERE s_id = ?", (id,))
+        cursor.execute("SELECT * FROM supervisors WHERE supervisor_id = ?", (id,))
         supervisor = cursor.fetchone()
 
         return render_template('delete_supervisor.html', supervisor_id=id, supervisor=supervisor)
@@ -144,7 +152,7 @@ def edit_supervisor(id):
             SET s_first_name=?, s_last_name=?, s_gender=?, s_date_of_birth=?, 
                 s_assign_to=?, s_address1=?, s_state=?, s_address2=?, 
                 s_postcode=?, s_city=?, s_driver_license=?
-            WHERE s_id=?
+            WHERE supervisor_id=?
         """, (new_first_name, new_last_name, new_gender, new_date_of_birth,
               new_assign_to, new_address1, new_state, new_address2,
               new_postcode, new_city, new_driver_license, id))
@@ -153,7 +161,9 @@ def edit_supervisor(id):
         return redirect(url_for('display_supervisors'))
     else:
         # Fetch supervisor details for pre-populating the form
-        cursor.execute("SELECT * FROM supervisors WHERE s_id = ?", (id,))
+        cursor.execute("SELECT supervisor_id, s_first_name, s_last_name, s_state, s_assign_to FROM supervisors")
+
+
         supervisor = cursor.fetchone()
 
         return render_template('edit_supervisor.html', supervisor_id=id, supervisor=supervisor)
@@ -184,7 +194,7 @@ def admin_loader_reg():
         ))
         conn.commit()
 
-        return redirect(url_for('admin_index'))
+        return redirect(url_for('admin_dashboard'))
 
     # If it's a GET request, render the form
     return render_template('admin_loader_reg.html')
@@ -207,13 +217,13 @@ def display_loader():
 def delete_loader(id):
     if request.method == 'POST':
         # Assuming you have a loaders table in your database
-        cursor.execute("DELETE FROM Loader WHERE l_id = ?", (id,))
+        cursor.execute("DELETE FROM Loader WHERE loader_id = ?", (id,))
         conn.commit()
 
         return redirect(url_for('display_loader'))
     else:
         # Fetch loader details for confirmation message
-        cursor.execute("SELECT * FROM Loader WHERE l_id = ?", (id,))
+        cursor.execute("SELECT * FROM Loader WHERE loader_id = ?", (id,))
         loader = cursor.fetchone()
 
         return render_template('delete_loader.html', loader_id=id, loader=loader)
@@ -238,7 +248,7 @@ def edit_loader(id):
             UPDATE Loader 
             SET l_first_name=?, l_last_name=?, l_email=?, l_gender=?, l_date_of_birth=?, 
                 l_address=?, l_state=?, l_postcode=?, l_city=?
-            WHERE l_id=?
+            WHERE loader_id=?
         """, (new_first_name, new_last_name, new_email, new_gender, new_date_of_birth,
               new_address, new_state, new_postcode, new_city, id))
         conn.commit()
@@ -246,7 +256,8 @@ def edit_loader(id):
         return redirect(url_for('display_loader'))
     else:
         # Fetch loader details for pre-populating the form
-        cursor.execute("SELECT * FROM Loader WHERE l_id = ?", (id,))
+        cursor.execute("SELECT loader_id, l_first_name, l_last_name, l_state, l_email, l_address FROM Loader")
+
         loader = cursor.fetchone()
 
         return render_template('edit_loader.html', loader_id=id, loader=loader)
@@ -274,21 +285,18 @@ def admin_driver_reg():
             driver_license))
         conn.commit()
 
-        return redirect(url_for('admin_index'))
+        return redirect(url_for('admin_dashboard'))
 
     return render_template('admin_driver_reg.html')
 
 
 @app.route("/display_driver")
 def display_driver():
-    # Execute the SQL query to fetch all driver details
-    cursor.execute("""
-        SELECT * FROM driver;
-    """)
+    cursor.execute("SELECT driver_id, d_first_name, d_last_name, d_state, d_assign_to, d_driver_license FROM driver");
 
     # Fetch all the driver details
     drivers_data = cursor.fetchall()
-
+    print(drivers_data)
     return render_template('display_driver.html', drivers_data=drivers_data)
 
 
@@ -296,13 +304,13 @@ def display_driver():
 def delete_driver(id):
     if request.method == 'POST':
         # Assuming you have a driver table in your database
-        cursor.execute("DELETE FROM driver WHERE d_id = ?", (id,))
+        cursor.execute("DELETE FROM driver WHERE driver_id = ?", (id,))
         conn.commit()
 
         return redirect(url_for('display_driver'))
     else:
         # Fetch driver details for confirmation message
-        cursor.execute("SELECT * FROM driver WHERE d_id = ?", (id,))
+        cursor.execute("SELECT * FROM driver WHERE driver_id = ?", (id,))
         driver = cursor.fetchone()
 
         return render_template('delete_driver.html', driver_id=id, driver=driver)
@@ -330,7 +338,7 @@ def edit_driver(id):
             SET d_first_name=?, d_last_name=?, d_gender=?, d_date_of_birth=?, 
                 d_assign_to=?, d_address1=?, d_state=?, d_address2=?, 
                 d_postcode=?, d_city=?, d_driver_license=?
-            WHERE d_id=?
+            WHERE driver_id=?
         """, (new_first_name, new_last_name, new_gender, new_date_of_birth,
               new_assign_to, new_address1, new_state, new_address2,
               new_postcode, new_city, new_driver_license, id))
@@ -339,7 +347,7 @@ def edit_driver(id):
         return redirect(url_for('display_driver'))
     else:
         # Fetch driver details for pre-populating the form
-        cursor.execute("SELECT * FROM driver WHERE d_id = ?", (id,))
+        cursor.execute("SELECT * FROM driver WHERE driver_id = ?", (id,))
         driver = cursor.fetchone()
 
         return render_template('edit_driver.html', driver_id=id, driver=driver)
@@ -397,7 +405,6 @@ def delete_product(id):
     return redirect(url_for('display_products'))
 
 
-
 @app.route('/admin_map_reg', methods=['GET', 'POST'])
 def admin_map_reg():
     if request.method == 'POST':
@@ -421,7 +428,7 @@ def admin_map_reg():
                 print(f"Error inserting data into the database: {e}")
 
             # Redirect to the admin index or wherever appropriate
-            return redirect(url_for('admin_index'))
+            return redirect(url_for('admin_dashboard'))
 
     # Render the form template
     return render_template('admin_map_reg.html')
@@ -506,7 +513,7 @@ def report_customer():
 
 
 def get_driver_id(driver_name):
-    sql_query = "SELECT d_id FROM driver WHERE d_first_name = ? AND d_last_name = ?"
+    sql_query = "SELECT driver_id FROM driver WHERE d_first_name = ? AND d_last_name = ?"
     try:
         with create_connection().cursor() as local_cursor:
             local_cursor.execute(sql_query, driver_name.split())
@@ -518,7 +525,7 @@ def get_driver_id(driver_name):
 
 
 def get_loader_id(loader_name):
-    sql_query = "SELECT l_id FROM Loader WHERE l_first_name = ? AND l_last_name = ?"
+    sql_query = "SELECT loader_id FROM Loader WHERE l_first_name = ? AND l_last_name = ?"
     try:
         with create_connection().cursor() as local_cursor:
             local_cursor.execute(sql_query, loader_name.split())
@@ -577,7 +584,7 @@ def supervisor_assign_map():
             print(f"Error inserting data into the database: {e}")
 
         # Redirect to the admin index or wherever appropriate
-        return redirect(url_for('admin_index'))
+        return redirect(url_for('admin_dashboard'))
 
     # For GET requests, render the template for the supervisor_assign_map page
     maps = fetch_maps_from_database()

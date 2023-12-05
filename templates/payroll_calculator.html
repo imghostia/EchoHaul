@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payroll Calculator</title>
+</head>
+<body>
+    <h1>Payroll Calculator</h1>
+    <h2>{{ employee_type }} Payroll</h2>
+    <!-- Display the calculated data here -->
+    <p>Total hours worked: {{ data.total_hours }}</p>
+    <p>Approved leave hours: {{ data.approved_leave }}</p>
+    <p>Salary per hour: {{ data.salary_per_hour }}</p>
+    <p>Total salary: {{ data.total_salary }}</p>
+    <p>Tax deducted (13%): {{ data.tax_deduction }}</p>
+    <p>Gross salary: {{ data.gross_salary }}</p>
+
+
+    <a href="{{ url_for('calculate_payroll') }}">
+        <button type="button">Calculate Payroll</button>
+    </a>
+
+</body>
+</html>
+
+
