@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neighborhood Reviews - Route Assessment</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+        }
+
+        header {
+            background-color: #3498db;
+            color: #fff;
+            text-align: center;
+            padding: 1em 0;
+        }
+
+        section {
+            padding: 2em;
+            text-align: center;
+        }
+
+        #progress-graph {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: conic-gradient(#3498db 0%, #3498db 50%, #ddd 50%, #ddd 100%);
+            margin: 0 auto;
+        }
+
+        .status-text {
+            margin-top: 1em;
+            font-size: 18px;
+            color: #333;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Neighborhood Reviews - Route Assessment</h1>
+    </header>
+
+    <section>
+        <div id="progress-graph"></div>
+        <div class="status-text">Neighborhood Reviews in Progress</div>
+    </section>
+
+    <script>
+        // Simulate progress for demonstration purposes
+        let progress = 0;
+        const progressGraph = document.getElementById('progress-graph');
+
+        function updateProgressGraph() {
+            if (progress <= 80) {
+                const gradient = `conic-gradient(#3498db 0%, #3498db ${progress}%, #ddd ${progress}%, #ddd 100%)`;
+                progressGraph.style.background = gradient;
+                progress += 2;
+                setTimeout(updateProgressGraph, 100);
+            }
+        }
+
+        // Uncomment the line below to start the progress simulation
+        updateProgressGraph();
+    </script>
+
+</body>
+
+</html>

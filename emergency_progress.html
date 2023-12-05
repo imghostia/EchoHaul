@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crisis Response</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 1em 0;
+        }
+
+        section {
+            padding: 2em;
+            text-align: center;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        #progress-bar-container {
+            width: 60%;
+            margin: 0 auto;
+            background-color: #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        #progress-bar {
+            width: 0;
+            height: 30px;
+            background-color: #4caf50;
+            transition: width 1s ease-in-out;
+        }
+
+        .status-text {
+            margin-top: 1em;
+            font-size: 18px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        header {
+            background-color: #4285f4;
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        .content {
+            padding: 20px;
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            margin-bottom: 20px;
+            background-color: #ddd;
+            height: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            width: 50%;
+            /* Change the width dynamically using JavaScript */
+            height: 100%;
+            background-color: #4caf50;
+            border-radius: 10px;
+            transition: width 0.3s ease;
+        }
+
+        #status {
+            font-size: 18px;
+            color: #333;
+        }
+
+        .emergency-info,
+        .safety-tips,
+        .emergency-contacts,
+        .initiatives {
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            color: #4285f4;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        ul li {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Crisis Response</h1>
+    </header>
+
+    <section>
+
+        <div id="progress-bar-container">
+            <div id="progress-bar"></div>
+        </div>
+        <div class="status-text">Status of the emergency response</div>
+
+        <div class="container">
+
+            <div class="content">
+
+
+                <div class="emergency-info">
+                    <h2>Current Emergency: Vehicle Accident</h2>
+                    <p>A major vehicle accident has occurred in the area. Stay clear of the affected area and follow
+                        emergency
+                        personnel instructions.</p>
+                </div>
+
+                <div class="safety-tips">
+                    <h2>Safety Tips for Vehicle Emergencies</h2>
+                    <ul>
+                        <li>Stay calm and assess the situation. Check for injuries and call for medical assistance if
+                            needed.</li>
+                        <li>Move to a safe location, if possible, and turn on hazard lights to alert other drivers.</li>
+                        <li>Contact emergency services immediately by dialing 911. Provide accurate details about the
+                            location and
+                            situation.</li>
+                        <li>If you have a first aid kit in your vehicle, use it to provide basic assistance while
+                            waiting for
+                            professional help.</li>
+                        <li>Follow the guidance of law enforcement and emergency responders at the scene.</li>
+                    </ul>
+                </div>
+
+                <div class="emergency-contacts">
+                    <h2>Emergency Contacts</h2>
+                    <p>In case of a vehicle emergency, dial 911 for immediate assistance. For non-emergency roadside
+                        assistance,
+                        contact [Roadside Assistance Number].</p>
+                </div>
+
+                <div class="initiatives">
+                    <h2>Ongoing Initiatives</h2>
+                    <p>We are actively coordinating with local authorities and emergency services to ensure a swift
+                        response to the
+                        vehicle accident. Follow our updates for the latest information.</p>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <script>
+        // Simulate progress for demonstration purposes
+        let progress = 0;
+        const progressBar = document.getElementById('progress-bar');
+
+        function updateProgressBar() {
+            if (progress <= 85) {
+                progressBar.style.width = progress + '%';
+                progress += 10;
+                setTimeout(updateProgressBar, 1000);
+            }
+        }
+
+
+        updateProgressBar();
+    </script>
+
+</body>
+
+</html>
