@@ -82,8 +82,23 @@
                   </div>
                 </div>
               </div>
+               <div class="col-md-4 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Payroll Calculator</h4>
+                    <p class="card-description">Calculate payroll for different employee roles </p>
+                    <div class="template-demo">
+                       <a href="{{ url_for('payroll_calculator', user_role='supervisor') }}"><button type="button" class="btn btn-outline-secondary btn-lg btn-block">Calculate supervisor Payroll</button></a>
+                         <a href="{{ url_for('payroll_calculator', user_role='supervisor') }}"><button type="button" class="btn btn-outline-secondary btn-lg btn-block">Calculate Driver Payroll</button></a>
+                        <a href="{{ url_for('payroll_calculator', user_role='supervisor') }}"><button type="button" class="btn btn-outline-secondary btn-lg btn-block">Calculate Loader Payroll</button></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
             </div>
           </div>
+
 
           <!-- content-wrapper ends -->
           <!-- partial:partials/_footer.html -->

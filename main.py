@@ -631,5 +631,31 @@ def customer_feedback():
     success_message = "Feedback submitted successfully!"
     return render_template('admin_dashboard.html', message=success_message)
 
+employee_data = {
+    'supervisor': {'hourly_rate': 20},
+    'driver': {'hourly_rate': 18},
+    'loader': {'hourly_rate': 16.65}
+}
+
+
+@app.route('/payroll_calculator', methods=['GET', 'POST'])
+def payroll_calculator():
+    if request.method == 'POST':
+        # Get data from the form
+        hours_worked = float(request.form['hours_worked'])
+        user_role = request.form['user_role']
+
+        # Get employee data based on user role
+        employee_info = employee_data.get(user_role, {})
+        hourly_rate = employee_info.get('hourly_rate', 0)
+
+        # Calculate total salary
+        total_salary = hours_worked * hourly_rate
+
+        return render_template('payroll_result.html', total_salary=total_salary)
+
+    return render_template('payroll_calculator.html')
+
+
 if __name__ == '__main__':
     app.run(debug=True)
