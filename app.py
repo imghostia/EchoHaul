@@ -2,8 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, flash, ses
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import create_engine
 import gauth, openai
-from transformers import AutoModelForCausalLM, AutoTokenizer
-from openai import OpenAI
+
 
 
 
@@ -140,7 +139,8 @@ def register():
 @app.route('/user', methods=['GET', 'POST'])
 def user():
     if 'loggedin' in session:
-        return render_template('user.html', username=session['eml'])
+        return render_template('user.html', username=session['eml'], id=session['user_id'])
+        ##return render_template('user.html', username=session['eml']) user this for actual user id in database
     else:
         return redirect(url_for('login'))
 
@@ -148,11 +148,12 @@ def user():
 def my_citations():
        
     if 'loggedin' in session:
-        ##id = session['user_id']
+        id = session['user_id']
         ##users_citations = User2.query.filter_by(user_id=id).all() #this would not show any data yet cause database keys are not linked yet
 
         #for checking if data is being pulled from database
         users_citations = User2.query.all()
+        ##users_citations = User2.query.filter_by(M_id=id).all()
     
     return render_template('citations.html', title='My Citations', users_citations=users_citations)
 

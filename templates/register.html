@@ -11,18 +11,18 @@
         <h2>Registration</h2>
         <form action="{{ url_for('register') }}" method="post">
             <div class="form-group">
-                <label for="firstName">First Name:</label>
-                <input type="text" id="firstName" name="firstName" required>
+                <label for="firstName">First Name (Alphanumeric):</label>
+                <input type="text" id="firstName" name="firstName" pattern="[A-Za-z0-9]+" required>
             </div>
 
             <div class="form-group">
-                <label for="lastName">Last Name:</label>
-                <input type="text" id="lastName" name="lastName" required>
+                <label for="lastName">Last Name (Alphanumeric):</label>
+                <input type="text" id="lastName" name="lastName" pattern="[A-Za-z0-9]+" required>
             </div>
 
             <div class="form-group">
                 <label for="email">Email:</label>
-                <input type="text" id="emailOrPhone" name="emailOrPhone" required>
+                <input type="email" id="email" name="email" required>
             </div>
 
             <div class="form-group">
@@ -31,13 +31,13 @@
             </div>
 
             <div class="form-group">
-                <label for="driversLicense">Driver's License:</label>
-                <input type="text" id="driversLicense" name="driversLicense" required>
+                <label for="driversLicense">Driver's License (Numerical):</label>
+                <input type="text" id="driversLicense" name="driversLicense" pattern="[0-9]+" required>
             </div>
 
             <div class="form-group">
-                <label for="address">Address:</label>
-                <input type="text" id="address" name="address" required>
+                <label for="address">Address (Street Number, Number, and Street):</label>
+                <input type="text" id="address" name="address" pattern="[A-Za-z0-9]+\s[0-9]+\s[A-Za-z0-9]+" required>
             </div>
 
             <button type="submit">Register</button>
