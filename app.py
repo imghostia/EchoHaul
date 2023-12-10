@@ -342,12 +342,22 @@ def edit_loader(id):
         return render_template('edit_loader.html', loader_id=id, loader=loader)
 
 
-@app.route("/display_supervisors")
+@app.route("/display_supervisors", methods=['GET', 'POST'])
 def display_supervisors():
-    # Execute the SQL query to fetch all supervisor details
-    cursor.execute("""
-        SELECT * FROM supervisors;
-    """)
+    if request.method == 'POST':
+        start_date = request.form['start_date']
+        end_date = request.form['end_date']
+
+        # Execute the SQL query to fetch supervisor details within the date range
+        cursor.execute("""
+            SELECT * FROM supervisors
+            WHERE registration_date BETWEEN ? AND ?;
+        """, (start_date, end_date))
+    else:
+        # If it's a GET request, fetch all supervisor details without filtering
+        cursor.execute("""
+            SELECT * FROM supervisors;
+        """)
 
     # Fetch all the supervisor details
     supervisors_data = cursor.fetchall()
@@ -904,16 +914,16 @@ def supervisor_assign_map():
             driver_id = request.form.get('d_assign_to_driver')
             loader_id = request.form.get('d_assign_to_loader')
             assign_map_note = request.form.get('assign_map_note')
-
+            print(map_id,driver_id,loader_id,assign_map_note)
             # Insert data into the Assignment_map table
             with conn.cursor() as local_cursor:
+                print("in the local cursor")
+                # local_cursor.execute( "Select * from Assignment_maps")
+                # print(cursor.fetchall())
                 local_cursor.execute(
                     "INSERT INTO Assignment_maps (map_id, driver_id, loader_id, assign_map_note) VALUES (?, ?, ?, ?)",
                     (map_id, driver_id, loader_id, assign_map_note))
                 conn.commit()
-
-            # Redirect to the supervisor index or wherever appropriate
-            return redirect(url_for('supervisor_index'))
 
         except pyodbc.Error as e:
             # Handle the database exception
@@ -1006,22 +1016,22 @@ def view_assignment_details():
             # Fetch assignment details by joining Map, Loader, Driver, and Assignment_map tables
             query = """
                 SELECT
-    am.assignment_id,
-    m.map_zone,
-    l.l_first_name AS loader_first_name,
-    l.l_last_name AS loader_last_name,
-    d.d_first_name AS driver_first_name,
-    d.d_last_name AS driver_last_name,
-    am.assign_map_note,
-    am.assignment_date
-FROM
-    Assignment_maps am
-INNER JOIN
-    Map m ON am.map_id = m.map_id
-INNER JOIN
-    Loader l ON am.loader_id = l.l_id
-INNER JOIN
-    driver d ON am.driver_id = d.d_id;
+                    am.assignment_id,
+                    m.map_zone,
+                    l.l_first_name AS loader_first_name,
+                    l.l_last_name AS loader_last_name,
+                    d.d_first_name AS driver_first_name,
+                    d.d_last_name AS driver_last_name,
+                    am.assign_map_note,
+                    am.assignment_date
+                FROM
+                    Assignment_maps am
+                INNER JOIN
+                    Map m ON am.map_id = m.map_id
+                INNER JOIN
+                    Loader l ON am.loader_id = l.l_id
+                INNER JOIN
+                    driver d ON am.driver_id = d.d_id;
             """
 
             cursor.execute(query)
@@ -1032,9 +1042,6 @@ INNER JOIN
         return "An error occurred while processing your request."
 
     return render_template('view_assignment_details.html', assignment_details=assignment_details)
-
-
-# You can create a template (assignment_details.html) to display the details in a user-friendly way.
 
 
 employee_data = {
@@ -1108,6 +1115,41 @@ def payroll_pdf():
     response.mimetype = 'application/pdf'
     response.headers['Content-Disposition'] = 'inline; filename=payroll_data.pdf'
     return response
+
+
+@app.route('/view_complaints', methods=['GET'])
+def view_complaints():
+    with conn.cursor() as cursor:
+        select_query = "SELECT c_desc FROM complaints"
+        cursor.execute(select_query)
+        complaints = cursor.fetchall()
+
+    return render_template('view_complaints.html', complaints=complaints)
+
+
+@app.route('/customer_feedback', methods=['GET'])
+def view_feedback():
+    return render_template('customer_feedback.html')
+
+
+@app.route('/customer_feedback', methods=['POST'])
+def customer_feedback():
+    customer_name = request.form['customerName']
+    email = request.form['email']
+    phone = request.form['phone']
+    feedback_type = request.form['feedbackType']
+    feedback_text = request.form['feedback']
+
+    # Here, you can process the feedback data, store it in a database, send emails, etc.
+    # For simplicity, let's just print the information to the console.
+    print(f"Customer Name: {customer_name}")
+    print(f"Email: {email}")
+    print(f"Phone: {phone}")
+    print(f"Feedback Type: {feedback_type}")
+    print(f"Feedback: {feedback_text}")
+
+    success_message = "Feedback submitted successfully!"
+    return render_template('admin_index.html', message=success_message)
 
 
 @app.route("/logout")
